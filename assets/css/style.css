@@ -1,21 +1,41 @@
 body {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-  }
-  
-  .swim-lanes {
-    min-height: 60vh;
-  }
-  
-  .task-card {
-    margin: 0 auto;
-  }
-  
-  .task-card:hover {
-    cursor: grab;
-  }
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
 
-  .ui-draggable-dragging {
-    z-index: 1000 !important; 
-  }
-  
+.swim-lanes {
+  min-height: 60vh;
+}
+
+.task-card {
+  margin: 0 auto;
+}
+
+.task-card:hover {
+  cursor: grab;
+}
+
+
+.draggable {
+  cursor: move;
+  z-index: 1001;
+}
+
+
+.droppable {
+  min-height: 100px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 2px dashed #ccc;
+  z-index: 1001; 
+}
+
+
+.droppable.active {
+  border-color: #007bff;
+}
+
+
+.overlap {
+  background-color: rgba(0, 123, 255, 0.1); 
+}

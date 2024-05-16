@@ -1,4 +1,3 @@
-
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
 
@@ -25,50 +24,55 @@ function renderTaskList() {
     const taskCard = createTaskCard(task);
     const $card = $(taskCard); 
 
-    
-    $card.draggable({
+    $card.addClass("draggable"); 
+
+    $(`#${task.status}-cards`).append($card);
+  });
+
+  
+  $(".draggable").each(function () {
+    $(this).draggable({
       revert: "invalid",
       stack: ".card",
       cursor: "move",
+      zIndex: 1000,
       start: function(event, ui) {
-        $(this).css("z-index", 1000);
+        $(this).css("z-index", 1000); 
       },
       stop: function(event, ui) {
         $(this).css("z-index", ""); 
       }
     });
-
-    
-    $(`#${task.status}-cards`).append($card);
   });
+
+  
+  $(".droppable").css("z-index", "1"); 
 }
 
 function handleAddTask(event) {
-    console.log("handleAddTask function called"); 
-    const title = $("#task-title").val();
-    const dueDate = $("#task-due-date").val();
-    const description = $("#task-description").val();
-  
-    if (title && dueDate && description) {
-      const newTask = {
-        id: generateTaskId(),
-        title: title,
-        dueDate: dueDate,
-        description: description,
-        status: "todo"
-      };
-  
-      taskList.push(newTask);
-      localStorage.setItem("tasks", JSON.stringify(taskList));
-      localStorage.setItem("nextId", JSON.stringify(nextId));
-  
-      renderTaskList(); 
-      $("#exampleModal").modal("hide");
-    } else {
-      alert("Please fill out all fields.");
-    }
-}
+  const title = $("#task-title").val();
+  const dueDate = $("#task-due-date").val();
+  const description = $("#task-description").val();
 
+  if (title && dueDate && description) {
+    const newTask = {
+      id: generateTaskId(),
+      title: title,
+      dueDate: dueDate,
+      description: description,
+      status: "todo"
+    };
+
+    taskList.push(newTask);
+    localStorage.setItem("tasks", JSON.stringify(taskList));
+    localStorage.setItem("nextId", JSON.stringify(nextId));
+
+    renderTaskList(); 
+    $("#exampleModal").modal("hide");
+  } else {
+    alert("Please fill out all fields.");
+  }
+}
 
 function handleDeleteTask(event) {
   const card = $(event.target).closest(".card");
@@ -98,7 +102,6 @@ $(document).ready(function () {
   renderTaskList();
 
   $('#addTaskBtn').click(function () {
-    console.log("Add Task button clicked"); 
     handleAddTask(); 
   });
 
@@ -110,7 +113,7 @@ $(document).ready(function () {
   $(".card").on("click", ".btn-delete-task", handleDeleteTask);
 
   $(".lane").droppable({
-    accept: ".card",
+    accept: ".draggable", 
     drop: handleDrop
   });
 

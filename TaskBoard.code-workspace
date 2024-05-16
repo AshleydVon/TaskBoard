@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "TaskBoard",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "assets"
+	}
+}
