@@ -11,8 +11,9 @@ function createTaskCardElement(task) {
   const title = $('<h5>').addClass('card-title').text(task.title);
   const description = $('<p>').addClass('card-text').text(task.description);
   const dueDate = $('<p>').addClass('card-text text-muted').text(`Due: ${task.dueDate}`);
+  const deleteButton = $('<button>').addClass('btn btn-danger btn-delete-task').text('Delete');
 
-  cardBody.append(title, description, dueDate);
+  cardBody.append(title, description, dueDate, deleteButton);
   card.append(cardBody);
 
   return card[0];
@@ -30,6 +31,9 @@ function renderTaskList() {
     $(`#${task.status}-cards`).append($card);
   });
 
+  /
+  $('.droppable').css('z-index', '1001');
+
   $('.draggable').each(function () {
     $(this).draggable({
       revert: 'invalid',
@@ -37,15 +41,13 @@ function renderTaskList() {
       cursor: 'move',
       zIndex: 1000,
       start: function (event, ui) {
-        $(this).css('z-index', 1001);
+        
       },
       stop: function (event, ui) {
-        $(this).css('z-index', '');
+       
       }
     });
   });
-
-  $('.droppable').css('z-index', '1000');
 }
 
 function handleAddTask(event) {
@@ -109,7 +111,8 @@ $(document).ready(function () {
     handleAddTask(event);
   });
 
-  $('.card').on('click', '.btn-delete-task', handleDeleteTask);
+  // Handle delete task button click
+  $(document).on('click', '.btn-delete-task', handleDeleteTask);
 
   $('.lane').droppable({
     accept: '.draggable',
