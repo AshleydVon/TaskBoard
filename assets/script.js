@@ -31,20 +31,21 @@ function renderTaskList() {
     $(`#${task.status}-cards`).append($card);
   });
 
-  /
+  
   $('.droppable').css('z-index', '1001');
+  $('.draggable').css('z-index', '1002'); 
 
   $('.draggable').each(function () {
     $(this).draggable({
       revert: 'invalid',
-      stack: '.card',
+      stack: '.draggable', 
       cursor: 'move',
-      zIndex: 1000,
+      zIndex: 1002, 
       start: function (event, ui) {
         
       },
       stop: function (event, ui) {
-       
+        
       }
     });
   });
@@ -111,7 +112,6 @@ $(document).ready(function () {
     handleAddTask(event);
   });
 
-  // Handle delete task button click
   $(document).on('click', '.btn-delete-task', handleDeleteTask);
 
   $('.lane').droppable({
